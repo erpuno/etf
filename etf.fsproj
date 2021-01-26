@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Authors>Namdak Tonpa;Siegmentation Fault</Authors>
+    <Company>INFOTECH SE</Company>
+    <UseAppHost>true</UseAppHost>
+    <Version>1.0.0</Version>
+    <IncludeSource>true</IncludeSource>
+    <PackageTags>Erlang;BERT;ETF</PackageTags>
+    <PackageDescription>Erlang External Term Format (ETF/BERT) encoder/decoder for F#</PackageDescription>
+    <RepositoryUrl>https://github.com/erpuno/bert</RepositoryUrl>
+    <Description>Performant and idiomatic F# Erlang ETF/BERT encoder/decoder.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src/types.fs" />
+    <Compile Include="src/decoder.fs" />
+    <Compile Include="src/encoder.fs" />
+  </ItemGroup>
+
+</Project>
