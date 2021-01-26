@@ -45,17 +45,14 @@ module Decoder =
         | 105uy -> Tuple (getInt xs |> getList)
         | 106uy -> Nil
         | 107uy -> String (getWord xs |> int |> getUTF8 xs)
-        | 108uy ->
-            let res = getList (getInt xs)
-            List (res, parseRead xs)
+        | 108uy -> List (getList (getInt xs), parseRead xs)
         | 109uy -> Binary (Array.init (getInt xs) (fun _ -> xs.Get ()))
         | 110uy -> Bigint (xs.Get () |> int |> getBignum xs)
         | 111uy -> Bigint (getInt xs |> getBignum xs)
         | 115uy -> Atom (xs.Get () |> int |> getLatin1 xs)
-        | 116uy ->
-            fun _ -> (parseRead xs, parseRead xs)
-            |> Seq.init (getInt xs)
-            |> fun res -> Dict (Map res)
+        | 116uy -> fun _ -> (parseRead xs, parseRead xs)
+                   |> Seq.init (getInt xs)
+                   |> fun res -> Dict (Map res)
         | 118uy -> Atom (getWord xs |> int |> getUTF8 xs)
         | 119uy -> Atom (xs.Get () |> int |> getUTF8 xs)
         | _     -> Error "Term?"

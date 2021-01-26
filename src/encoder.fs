@@ -34,13 +34,10 @@ module Encoder =
         | String s     -> 1 + stringSize s
         | List (x, xs) -> 1 + listSize x + termSize xs
         | Binary xs    -> 1 + 4 + xs.Length
-        | Bigint x     ->
-            let bytes = x.GetByteCount ()
-            if bytes <= dwordSize then 1 + 4 + 1 + bytes
-            else failwith "Bigint too big (more than 2147483647 bytes)"
-        | Dict dict    ->
-            1 + 4 + Seq.sumBy (fun (k, v) -> termSize k + termSize v)
-                              (Map.toSeq dict)
+        | Bigint x     -> let bytes = x.GetByteCount ()
+                          if bytes <= dwordSize then 1 + 4 + 1 + bytes
+                          else failwith "Bigint too big (more than 2147483647 bytes)"
+        | Dict dict    -> 1 + 4 + Seq.sumBy (fun (k, v) -> termSize k + termSize v) (Map.toSeq dict)
         | Error err    -> failwithf "attempt to get size of Error(%s)" err
         | Nil          -> 1
 
@@ -59,28 +56,22 @@ module Encoder =
         |> ignore
 
     let rec writeTerm (xs : Write<byte>) : Term -> unit = function
-        | Byte x -> xs.Write 97uy; xs.Write x
-        | Int x  -> xs.Write 98uy; writeInt xs x
-        | Float x ->
-            xs.Write 70uy
-            BinaryPrimitives.WriteDoubleBigEndian (xs.Span 8, x)
+        | Byte x       -> xs.Write 97uy; xs.Write x
+        | Int x        -> xs.Write 98uy; writeInt xs x
+        | Float x      -> xs.Write 70uy; BinaryPrimitives.WriteDoubleBigEndian (xs.Span 8, x)
         | Atom s       -> xs.Write 118uy; writeUTF8 xs s
-        | Tuple ys     -> xs.Write 105uy; writeInt xs ys.Length;
-                          List.iter (writeTerm xs) ys
+        | Tuple ys     -> xs.Write 105uy; writeInt xs ys.Length; List.iter (writeTerm xs) ys
         | String s     -> xs.Write 107uy; writeUTF8 xs s
-        | List (y, ys) -> xs.Write 108uy; writeInt xs y.Length;
-                          List.iter (writeTerm xs) y; writeTerm xs ys
-        | Binary ys    -> xs.Write 109uy; writeInt xs ys.Length;
-                          Array.iter xs.Write ys
+        | List (y, ys) -> xs.Write 108uy; writeInt xs y.Length; List.iter (writeTerm xs) y; writeTerm xs ys
+        | Binary ys    -> xs.Write 109uy; writeInt xs ys.Length; Array.iter xs.Write ys
         | Dict dict    -> xs.Write 116uy; writeInt xs (Map.count dict);
                           Map.iter (fun k v -> writeTerm xs k; writeTerm xs v) dict
-        | Bigint x     ->
-            let bytes = (BigInteger.Abs x).ToByteArray ()
-            xs.Write 111uy; writeInt xs bytes.Length;
-            xs.Write (if x.Sign >= 0 then 0uy else 1uy)
-            Array.iter xs.Write bytes
-        | Error err -> failwithf "attempt to encode Error(%s)" err
-        | Nil       -> xs.Write 106uy
+        | Bigint x     -> let bytes = (BigInteger.Abs x).ToByteArray ()
+                          xs.Write 111uy; writeInt xs bytes.Length;
+                          xs.Write (if x.Sign >= 0 then 0uy else 1uy)
+                          Array.iter xs.Write bytes
+        | Error err    -> failwithf "attempt to encode Error(%s)" err
+        | Nil          -> xs.Write 106uy
 
     let encodeTerm (τ : Term) : byte array =
         let xs = Write (0uy, termSize τ + 1)
