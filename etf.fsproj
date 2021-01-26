@@ -9,7 +9,7 @@
     <IncludeSource>true</IncludeSource>
     <PackageTags>Erlang;BERT;ETF</PackageTags>
     <PackageDescription>Erlang External Term Format (ETF/BERT) encoder/decoder for F#</PackageDescription>
-    <RepositoryUrl>https://github.com/erpuno/bert</RepositoryUrl>
+    <RepositoryUrl>https://github.com/erpuno/etf</RepositoryUrl>
     <Description>Performant and idiomatic F# Erlang ETF/BERT encoder/decoder.</Description>
   </PropertyGroup>
 
