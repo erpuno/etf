@@ -1,11 +1,11 @@
-namespace BERT
+namespace ETF
 
 open System
 open System.Text
 open System.Numerics
 open System.Buffers.Binary
 
-open type BERT.Types.Term
+open type ETF.Types.Term
 
 [<AutoOpen>]
 module Encoder =
