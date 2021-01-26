@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Authors>Namdak Tonpa;Siegmentation Fault</Authors>
     <Company>INFOTECH SE</Company>
@@ -18,7 +17,6 @@
     <Compile Include="src/types.fs" />
     <Compile Include="src/decoder.fs" />
     <Compile Include="src/encoder.fs" />
-    <Compile Include="src/program.fs" />
   </ItemGroup>
 
 </Project>
