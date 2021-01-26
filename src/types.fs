@@ -17,6 +17,7 @@ module Types =
         | Binary of byte array
         | Bigint of BigInteger
         | Dict   of Map<Term, Term>
+        | Error  of string
         | Nil
 
     type Read<'a> (arr : 'a array) =

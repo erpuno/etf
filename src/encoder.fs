@@ -41,6 +41,7 @@ module Encoder =
         | Dict dict    ->
             1 + 4 + Seq.sumBy (fun (k, v) -> termSize k + termSize v)
                               (Map.toSeq dict)
+        | Error err    -> failwithf "attempt to get size of Error(%s)" err
         | Nil          -> 1
 
     let writeWord (xs : Write<byte>) (x : UInt16) : unit =
@@ -78,7 +79,8 @@ module Encoder =
             xs.Write 111uy; writeInt xs bytes.Length;
             xs.Write (if x.Sign >= 0 then 0uy else 1uy)
             Array.iter xs.Write bytes
-        | Nil -> xs.Write 106uy
+        | Error err -> failwithf "attempt to encode Error(%s)" err
+        | Nil       -> xs.Write 106uy
 
     let encodeTerm (τ : Term) : byte array =
         let xs = Write (0uy, termSize τ + 1)

@@ -58,10 +58,10 @@ module Decoder =
             |> fun res -> Dict (Map res)
         | 118uy -> Atom (getWord xs |> int |> getUTF8 xs)
         | 119uy -> Atom (xs.Get () |> int |> getUTF8 xs)
-        | _     -> failwith "Term?"
+        | _     -> Error "Term?"
 
     let decodeTerm (arr : byte array) =
         let xs = Read arr
         let magic = xs.Get ()
-        if magic <> 131uy then failwith "BERT?"
-        parseRead xs
+        if magic <> 131uy then Error "BERT?"
+        else parseRead xs
