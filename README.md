@@ -5,6 +5,29 @@ F# ETF Serializer
 
 This is tiny but robust Erlang Term Format (ETF) encoder/decoder.
 
+Usage
+-----
+
+Add library to your project:
+
+```
+$ dotnet add package etf
+```
+
+Open `ETF` namespace:
+
+```fsharp
+open ETF
+```
+
+Use `decodeTerm` and `encodeTerm`:
+
+```fsharp
+let τ = Term.String "hello world"
+let bytes = encodeTerm τ
+let ρ = decodeTerm bytes
+```
+
 Credits
 -------
 
