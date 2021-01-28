@@ -3,7 +3,7 @@ F# ETF Serializer
 
 [![NuGet version (etf)](https://img.shields.io/nuget/v/etf.svg?style=flat-square)](https://www.nuget.org/packages/etf/)
 
-This is tiny but robust Erlang Term Format (ETF) encoder/decoder.
+This is tiny (170 LOC) but robust Erlang Term Format (ETF) encoder/decoder.
 
 Usage
 -----

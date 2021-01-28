@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Authors>Namdak Tonpa;Siegmentation Fault</Authors>
     <Company>INFOTECH SE</Company>
+    <OutputType>Exe</OutputType>
     <UseAppHost>true</UseAppHost>
     <Version>1.0.1</Version>
     <IncludeSource>true</IncludeSource>
@@ -17,6 +18,7 @@
     <Compile Include="src/types.fs" />
     <Compile Include="src/decoder.fs" />
     <Compile Include="src/encoder.fs" />
+    <Compile Include="src/program.fs" />
   </ItemGroup>
 
 </Project>
