@@ -40,6 +40,11 @@ module Decoder =
         |  70uy -> Float (BinaryPrimitives.ReadDoubleBigEndian (xs.Getn 8))
         |  97uy -> Byte (xs.Get ())
         |  98uy -> Int (getInt xs)
+        |  99uy ->
+            let mutable res = double 0
+            match Double.TryParse (getLatin1 xs 26, &res) with
+            | true  -> Float res
+            | false -> Error "Float?"
         | 100uy -> Atom (getWord xs |> int |> getLatin1 xs)
         | 104uy -> Tuple (xs.Get() |> int |> getList)
         | 105uy -> Tuple (getInt xs |> getList)

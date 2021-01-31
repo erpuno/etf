@@ -6,7 +6,7 @@
     <Company>INFOTECH SE</Company>
     <OutputType>Exe</OutputType>
     <UseAppHost>true</UseAppHost>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <IncludeSource>true</IncludeSource>
     <PackageTags>Erlang;BERT;ETF</PackageTags>
     <PackageDescription>Erlang External Term Format (ETF/BERT) encoder/decoder for F#</PackageDescription>
